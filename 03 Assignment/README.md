@@ -1,5 +1,4 @@
 # Running
-The solutions can be run using `main.py`.
 
 Make sure that you execute the program using a Python environment which includes `numpy` and `matplotlib`.
 This can be created using
@@ -8,7 +7,10 @@ conda create --name <env> --file requirements.txt
 conda activate <env>
 ```
 
-When ready, make sure the file "periodic.dat" is available in the same directory, and run the program using
+Output from problem 1, 2, 3 and 4 can be checked using
 ```bash
-python main.py
+python Q1.py
+python Q2.py
+python Q3.py
+python Q4.py
 ```
