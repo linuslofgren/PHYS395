@@ -15,13 +15,15 @@ def bisect(f, a, c):
     a      [x]      b   c
     """
 
-    b = (c+a)/2
+    phi = (5**(1/2)-1)/2
+
+    b = a + (c-a)*phi
     epsilon = 1e-10
 
     width = lambda: c - a
     left_width = lambda: b - a
     right_width = lambda: c - b
-    divide = lambda x, y: (x + y)/2
+    divide = lambda x, y: x + (y - x)*phi
     squeezed_between = lambda x, y, z: f(y) < f(x) and f(y) < f(z)
     
     while width() > epsilon:
