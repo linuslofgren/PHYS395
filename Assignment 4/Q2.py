@@ -35,5 +35,3 @@ def bisect(f, a, c):
             a, b, c = (a, b, x) if squeezed_between(a, b, x) else (b, x, c)
 
     return b
-
-# print(bisect(lambda x: (x-2)**2, -5, 5))

@@ -6,20 +6,25 @@ def f(x):
 def df(x):
     return 3*x**2 - 1
 
-zeros = set()
+def find_roots(f, df, search_space):
+    zeros = set()
 
-for start in np.linspace(-100, 100, 100):
-    x = start
+    for start in search_space:
+        x = start
 
-    N = 10
+        steps = 10
 
-    for n in range(N):
-        x -= f(x)/df(x)
+        for _ in range(steps):
+            x -= f(x)/df(x)
 
-    if np.abs(f(x)) == 0 and x not in zeros:
-        zeros.add(x)
+        if np.abs(f(x)) == 0 and x not in zeros:
+            zeros.add(x)
 
-print("Roots:")
-print("x\t f(x)")
-for x in zeros:
-    print(x, f(x))
+    return zeros
+
+if __name__ == "__main__":
+    roots = find_roots(f, df, np.linspace(-100, 100, 100))
+    print("Roots:")
+    print("f(x)\tx")
+    for x in roots:
+        print(f"{f(x):.4f}\t{x}")

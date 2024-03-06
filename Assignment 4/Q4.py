@@ -1,26 +1,31 @@
 from scipy.optimize import least_squares
 import numpy as np
 
-import matplotlib.pyplot as plt
+def optimize(x, y, c):
+    """
+    x: np.array (l)
+    y: np.array (l)
+    c: np.array (n)
+    basis: function (n),(l)->(n, l)
+    """
+    @np.vectorize(signature='(n),(m)->(n, m)')
+    def basis(a, x):
+        return np.cos(2*np.pi*np.outer(a, x))
 
-x, y = np.loadtxt("periodic.dat").T
+    def f(x, c):
+        *c, const = c
+        return (
+            np.exp(
+                np.sum(
+                    np.diag(c)@basis(np.arange(len(c)), x),
+                    axis=0
+                )
+            ) + const
+        )
 
-# n = 3, last element is the constant
-c = np.array([1, 1, 1, 1])
+    def residuals(c):
+        return y-f(x, c)
 
-def b(a, x):
-    return np.cos(2*np.pi*a*x)
+    r = least_squares(residuals, c, method="lm")
 
-def f(x, c):
-    *c, const = c
-    b_a = np.array([b(alpha, x) for alpha in range(len(c))])
-    return np.exp(np.sum(np.diag(c)@b_a, axis=0)) + const
-
-def chi(c):
-    return y-f(x, c)
-
-r = least_squares(chi, c, method="lm")
-
-plt.plot(x, y)
-plt.plot(x, f(x, r.x))
-plt.show()
+    return x, f(x, r.x)
