@@ -12,7 +12,7 @@ def find_roots(f, df, search_space):
     for start in search_space:
         x = start
 
-        steps = 10
+        steps = 100
 
         for _ in range(steps):
             x -= f(x)/df(x)
@@ -23,7 +23,7 @@ def find_roots(f, df, search_space):
     return zeros
 
 if __name__ == "__main__":
-    roots = find_roots(f, df, np.linspace(-100, 100, 100))
+    roots = find_roots(f, df, np.linspace(-10, 10, 100))
     print("Roots:")
     print("f(x)\tx")
     for x in roots:

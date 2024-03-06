@@ -1,5 +1,8 @@
 def bisect(f, a, c):
     """
+    This is an implementation of the algorithm described in the instructions and is a bit different from the one
+    described in other sources.
+
     a, b, c & x are either:
 
     _____________________
