@@ -1,6 +1,7 @@
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
 import numpy as np
+from Q1 import unit_period
 
 def evolution(l=1.0):
     omega = 1.0
@@ -36,17 +37,24 @@ def period_for(theta):
     stop.direction = 1
 
     soln = solve_ivp(f, [t[0],t[-1]], state, method='Radau', t_eval=t, atol=1e-12, events=stop)
-    x, v = soln.y
-    # plt.plot(soln.t*l, x, label=f"$\\lambda={l}$", alpha=0.8)
-    # plt.plot(soln.t, x, label=theta)
+
     period = np.max(soln.t)*2
     return period
 
 thetas = np.linspace(0, 0.99*np.pi, 40)[1:]
 
 periods = np.vectorize(period_for)(thetas)
-print(periods)
-plt.plot(thetas, periods)
-# plt.legend()
 
+fig, ax = plt.subplots()
+
+for t, p in zip(thetas, periods):
+    if np.abs(np.abs(p-unit_period())/unit_period()-0.1) < 0.01:
+        ax.axvline(x=t, c="y")
+ax.axhline(y=unit_period(), color="r", label="Harmonic approximation")
+ax.set_title("Period as a function of $\\Theta$.\n Yellow indicated amplitudes which gives a 10% difference from of harmonic approximation")
+ax.set_xlabel("$\\Theta$")
+ax.set_ylabel("Period")
+ax.plot(thetas, periods)
+ax.legend()
+fig.savefig("Q4.pdf")
 plt.show()

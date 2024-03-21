@@ -6,7 +6,6 @@ import numpy as np
 def cheb(v):
     def f(x, state):
         y, y_p = state
-        print(x, y)
         return [y_p, (x*y_p-(v**2)*y)/(1-x**2)]
     
     if v%2 == 0:
@@ -23,15 +22,19 @@ def cheb(v):
 
     return np.hstack([-np.flip(soln.t), soln.t]), np.hstack([f*np.flip(y*scalar), y*scalar])
 
+fig, ax = plt.subplots()
 
 for i in range(7):
     x, y = cheb(i)
 
-    plt.plot(x, y, label=f"v={i}")
+    ax.plot(x, y, label=f"v={i}")
 
 x, y = cheb(3/2)
 
-plt.plot(x, y, label=f"v=3/2")
+ax.plot(x, y, label=f"v=3/2")
+print("For v=3/2 the curve bends and does not look orthogonal to the others.")
 
-plt.legend()
+ax.set_title(r"Solutions to Chebyshev equation $(1-x2)y'' -xy' +v^2y =0$")
+ax.legend()
+fig.savefig("Q5.pdf")
 plt.show()
