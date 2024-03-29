@@ -5,13 +5,19 @@ import matplotlib.cm as cm
 from joblib import Parallel, delayed
 from gl import gl10
 from Q1 import omega, f
+
 n = 10
+
+# Zoom levels
 # theta_1_range = np.linspace(-np.pi+0.01, np.pi-0.01, n)
 # theta_2_range = np.linspace(-np.pi+0.01, np.pi-0.01, n)
 # theta_1_range = np.linspace(1.55, 2.144, n)
 # theta_2_range = np.linspace(-1.2, -0.72, n)
-theta_1_range = np.linspace(1.55, 1.72, n)
-theta_2_range = np.linspace(-1.2, -0.72, n)
+# theta_1_range = np.linspace(1.55, 1.72, n)
+# theta_2_range = np.linspace(-1.2, -0.72, n)
+theta_1_range = np.linspace(1.55, 1.6, n)
+theta_2_range = np.linspace(-1.2, -1.04, n)
+
 res = np.zeros((n, n))
 dt = 0.02
 time_limit = 100/omega
